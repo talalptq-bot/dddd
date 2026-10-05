@@ -1,0 +1,532 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, Tahoma, sans-serif;
+    background: #050816;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 14px;
+    padding: 13px 22px;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    background: #2563eb;
+    transition: 0.2s;
+}
+button:hover {
+    transform: scale(1.04);
+    background: #3b82f6;
+}
+button:disabled {
+    cursor: not-allowed;
+}
+.hidden {
+    display: none !important;
+}
+.page {
+    min-height: 100vh;
+    padding: 35px 18px;
+    position: relative;
+    z-index: 2;
+}
+.stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, white 1px, transparent 1px),
+        radial-gradient(circle, #93c5fd 1px, transparent 1px);
+    background-size: 90px 90px, 140px 140px;
+    background-position: 10px 20px, 50px 70px;
+    opacity: 0.35;
+}
+/* الرئيسية */
+#homePage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.home-content {
+    max-width: 700px;
+}
+.rocket {
+    font-size: 90px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+.home-content h1 {
+    font-size: clamp(40px, 8vw, 75px);
+    margin-bottom: 15px;
+}
+.home-content p {
+    font-size: 21px;
+    color: #cbd5e1;
+    margin-bottom: 30px;
+}
+.home-content button {
+    font-size: 20px;
+    padding: 16px 30px;
+}
+/* الاستكشاف */
+#planetsPage {
+    text-align: center;
+}
+#planetsPage > h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+.instruction {
+    color: #cbd5e1;
+    margin: 10px 0 25px;
+}
+#planetsPage h2 {
+    margin: 35px 0 20px;
+}
+.cards-container {
+    width: min(1200px, 100%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+}
+.planet-card,
+.space-card {
+    background: rgba(15, 23, 42, 0.88);
+    border: 1px solid #334155;
+    border-radius: 20px;
+    padding: 22px 15px;
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.25s;
+    cursor: pointer;
+}
+.planet-card:hover,
+.space-card:hover {
+    transform: translateY(-7px);
+    border-color: #60a5fa;
+}
+.planet-icon,
+.space-icon {
+    font-size: 75px;
+    margin-bottom: 15px;
+    animation: gentleFloat 4s ease-in-out infinite;
+}
+.planet-card h3,
+.space-card h3 {
+    font-size: 20px;
+}
+.main-buttons {
+    margin: 35px auto;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+/* نافذة المعلومات */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.modal-box {
+    width: min(600px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #0f172a;
+    border: 1px solid #475569;
+    border-radius: 25px;
+    padding: 30px;
+    text-align: center;
+}
+.detail-icon {
+    font-size: 90px;
+    margin-bottom: 15px;
+}
+.modal-box h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+.modal-box p {
+    color: #cbd5e1;
+    line-height: 1.9;
+}
+.detail-info {
+    margin: 20px 0;
+    padding: 18px;
+    border-radius: 15px;
+    background: #172033;
+    line-height: 1.8;
+}
+/* الاختبار */
+.quiz-box,
+.result-box,
+.final-game-box {
+    width: min(750px, 100%);
+    margin: 30px auto;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid #334155;
+    border-radius: 25px;
+    padding: 30px;
+    text-align: center;
+}
+#questionNumber {
+    color: #93c5fd;
+    margin-bottom: 15px;
+}
+.progress {
+    width: 100%;
+    height: 10px;
+    background: #1e293b;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+#progressFill {
+    height: 100%;
+    width: 10%;
+    background: #3b82f6;
+    transition: width 0.3s;
+}
+#question {
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+#answers {
+    display: grid;
+    gap: 12px;
+}
+.answer {
+    background: #1e293b;
+    border: 1px solid #475569;
+    text-align: right;
+}
+.answer.correct {
+    background: #15803d;
+    border-color: #22c55e;
+}
+.answer.wrong {
+    background: #b91c1c;
+    border-color: #ef4444;
+}
+/* النتائج */
+.result-icon {
+    font-size: 80px;
+    margin-bottom: 15px;
+}
+#score {
+    font-size: 55px;
+    font-weight: bold;
+    margin: 20px;
+    color: #60a5fa;
+}
+.result-box > button {
+    margin: 5px;
+}
+/* مساعد الفضاء */
+.ai-section {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #334155;
+}
+.ai-icon {
+    font-size: 50px;
+}
+.ai-section textarea {
+    width: 100%;
+    resize: vertical;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid #475569;
+    background: #020617;
+    color: white;
+    font-size: 17px;
+}
+.ai-answer {
+    margin-top: 15px;
+    padding: 18px;
+    background: #172033;
+    border-radius: 15px;
+    line-height: 1.8;
+    text-align: right;
+}
+/* قائمة المراحل */
+.game-total {
+    width: fit-content;
+    margin: 20px auto;
+    padding: 15px 25px;
+    border-radius: 15px;
+    background: #172033;
+    font-size: 20px;
+}
+.game-menu {
+    width: min(1100px, 100%);
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.game-stage {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid #334155;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+}
+.game-stage-icon {
+    font-size: 65px;
+    margin-bottom: 15px;
+}
+.game-stage p {
+    margin: 10px 0;
+    color: #cbd5e1;
+}
+.game-stage small {
+    display: block;
+    color: #60a5fa;
+    margin-bottom: 18px;
+}
+/* معلومات اللعبة */
+.game-info {
+    width: min(900px, 100%);
+    margin: 15px auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px;
+    background: #0f172a;
+    border-radius: 15px;
+}
+/* منطقة الألعاب */
+.game-area {
+    width: min(900px, 100%);
+    height: 500px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #334155;
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at 20% 20%, white 1px, transparent 2px),
+        radial-gradient(circle at 70% 40%, white 1px, transparent 2px),
+        #020617;
+}
+/* العد التنازلي */
+.countdown {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(2, 6, 23, 0.88);
+    font-size: clamp(100px, 25vw, 220px);
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
+}
+/* المرحلة 1 */
+.meteor {
+    position: absolute;
+    font-size: 38px;
+    cursor: pointer;
+    user-select: none;
+    animation: meteorFloat 1.5s ease-in-out infinite;
+}
+/* المرحلة 2 */
+#playerShip {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 45px;
+    z-index: 5;
+}
+.asteroid {
+    position: absolute;
+    font-size: 40px;
+    z-index: 3;
+}
+/* المرحلة 3 الجديدة */
+.rescue-area {
+    background:
+        radial-gradient(circle at 20% 20%, white 1px, transparent 2px),
+        radial-gradient(circle at 70% 40%, white 1px, transparent 2px),
+        radial-gradient(circle at 50% 80%, white 1px, transparent 2px),
+        #020617;
+}
+#spaceStation {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 65px;
+    z-index: 4;
+}
+#rescueShip {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 45px;
+    z-index: 5;
+}
+.energy-cell {
+    position: absolute;
+    font-size: 38px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 4;
+    animation: energyFloat 1.4s ease-in-out infinite;
+}
+.rescue-asteroid {
+    position: absolute;
+    font-size: 38px;
+    z-index: 3;
+}
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px;
+}
+.controls button {
+    width: 75px;
+    height: 55px;
+    font-size: 25px;
+}
+.game-result {
+    width: min(500px, 90%);
+    margin: 20px auto;
+    padding: 25px;
+    background: #0f172a;
+    border: 1px solid #475569;
+    border-radius: 20px;
+    text-align: center;
+}
+.game-result p {
+    margin: 15px;
+}
+.game-result button {
+    margin: 5px;
+}
+/* النتيجة النهائية */
+.final-score {
+    margin: 25px;
+    font-size: 70px;
+    font-weight: bold;
+    color: #60a5fa;
+}
+.final-score small {
+    font-size: 25px;
+    color: #cbd5e1;
+}
+.score-breakdown {
+    margin: 25px 0;
+    padding: 20px;
+    background: #172033;
+    border-radius: 15px;
+    line-height: 2;
+}
+/* الحركات */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-18px);
+    }
+}
+@keyframes gentleFloat {
+    0%, 100% {
+        transform: translateY(7px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+@keyframes meteorFloat {
+    0%, 100% {
+        transform: translateY(5px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+@keyframes energyFloat {
+    0%, 100% {
+        transform: translateY(5px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+/* الجوال */
+@media (max-width: 700px) {
+    .page {
+        padding: 25px 12px;
+    }
+    #planetsPage > h1 {
+        font-size: 30px;
+    }
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .planet-card,
+    .space-card {
+        min-height: 175px;
+        padding: 15px 8px;
+    }
+    .planet-icon,
+    .space-icon {
+        font-size: 55px;
+    }
+    .game-menu {
+        grid-template-columns: 1fr;
+    }
+    .game-area {
+        height: 420px;
+    }
+    .quiz-box,
+    .result-box,
+    .final-game-box {
+        padding: 20px;
+    }
+    .game-info {
+        font-size: 14px;
+    }
+    .home-content h1 {
+        font-size: 42px;
+    }
+    .home-content p {
+        font-size: 17px;
+    }
+    #spaceStation {
+        font-size: 55px;
+    }
+    #rescueShip {
+        font-size: 40px;
+    }
+    .countdown {
+        font-size: 120px;
+    }
+}

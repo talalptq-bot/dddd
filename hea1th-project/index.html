@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستكشف الفضاء 🚀</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="stars"></div>
+<audio id="backgroundMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+<!-- الرئيسية -->
+<section id="homePage" class="page">
+    <div class="home-content">
+        <div class="rocket">🚀</div>
+        <h1>مستكشف الفضاء</h1>
+        <p>اكتشف أسرار الكون والكواكب والنجوم 🌌</p>
+        <button id="startButton">
+            🚀 ابدأ الاستكشاف
+        </button>
+    </div>
+</section>
+<!-- الاستكشاف -->
+<section id="planetsPage" class="page hidden">
+    <h1>🌌 استكشاف الفضاء</h1>
+    <p class="instruction">
+        اضغط على أي جسم فضائي لمعرفة معلومات عنه
+    </p>
+    <h2>🪐 الكواكب</h2>
+    <div id="planetsContainer" class="cards-container"></div>
+    <h2>✨ أشياء أخرى في الفضاء</h2>
+    <div id="spaceContainer" class="cards-container"></div>
+    <div class="main-buttons">
+        <button id="quizButton">
+            🧠 اختبار الفضاء
+        </button>
+        <button id="gameButton">
+            🎮 مغامرة الفضاء
+        </button>
+    </div>
+</section>
+<!-- نافذة المعلومات -->
+<div id="planetDetails" class="modal hidden">
+    <div class="modal-box">
+        <div id="detailIcon" class="detail-icon"></div>
+        <h2 id="detailTitle"></h2>
+        <p id="detailDescription"></p>
+        <div id="detailInfo" class="detail-info"></div>
+        <button id="closeDetails">
+            ✖ إغلاق
+        </button>
+    </div>
+</div>
+<!-- الاختبار -->
+<section id="quizPage" class="page hidden">
+    <div class="quiz-box">
+        <div id="questionNumber">
+            السؤال 1 من 10
+        </div>
+        <div class="progress">
+            <div id="progressFill"></div>
+        </div>
+        <h2 id="question"></h2>
+        <div id="answers"></div>
+    </div>
+</section>
+<!-- نتيجة الاختبار -->
+<section id="resultPage" class="page hidden">
+    <div class="result-box">
+        <div class="result-icon">
+            🏆
+        </div>
+        <h1>نتيجة الاختبار</h1>
+        <div id="score">
+            0 / 10
+        </div>
+        <p id="resultText"></p>
+        <button id="restartButton">
+            🔄 إعادة الاختبار
+        </button>
+        <button id="backHomeButton">
+            🏠 الرئيسية
+        </button>
+        <!-- مساعد الفضاء -->
+        <div class="ai-section">
+            <div class="ai-icon">
+                🤖
+            </div>
+            <h2>
+                اسأل مستكشف الفضاء
+            </h2>
+            <p>
+                اكتب سؤالك عن الفضاء
+            </p>
+            <textarea
+                id="aiQuestion"
+                rows="5"
+                placeholder="مثال: ما أكبر كوكب؟"
+            ></textarea>
+            <button id="aiButton">
+                🚀 اسأل الآن
+            </button>
+            <div
+                id="aiAnswer"
+                class="ai-answer hidden"
+            ></div>
+        </div>
+    </div>
+</section>
+<!-- قائمة المغامرة -->
+<section id="gamePage" class="page hidden">
+    <h1>🎮 مغامرة الفضاء</h1>
+    <p class="instruction">
+        3 مراحل — المجموع النهائي 100 نقطة 🏆
+    </p>
+    <div class="game-total">
+        مجموعك الحالي:
+        <strong id="gameTotalScore">0</strong>
+        / 100
+    </div>
+    <div class="game-menu">
+        <div class="game-stage">
+            <div class="game-stage-icon">
+                ☄️
+            </div>
+            <h2>المرحلة 1</h2>
+            <p>صائد الشهب</p>
+            <small>30 نقطة</small>
+            <button id="stage1Button">
+                ابدأ
+            </button>
+        </div>
+        <div class="game-stage">
+            <div class="game-stage-icon">
+                🚀
+            </div>
+            <h2>المرحلة 2</h2>
+            <p>سباق الفضاء</p>
+            <small>35 نقطة</small>
+            <button id="stage2Button">
+                ابدأ
+            </button>
+        </div>
+        <div class="game-stage">
+            <div class="game-stage-icon">
+                🛰️
+            </div>
+            <h2>المرحلة 3</h2>
+            <p>إنقاذ محطة الفضاء</p>
+            <small>35 نقطة</small>
+            <button id="stage3Button">
+                ابدأ
+            </button>
+        </div>
+    </div>
+    <button id="backToSpaceButton">
+        🌌 العودة للاستكشاف
+    </button>
+</section>
+<!-- المرحلة 1 -->
+<section id="meteorGamePage" class="page hidden">
+    <h1>☄️ صائد الشهب</h1>
+    <p class="instruction">
+        اضغط على الشهب واجمع النقاط!
+    </p>
+    <div id="meteorCountdown" class="countdown hidden">
+        3
+    </div>
+    <div class="game-info">
+        <span>
+            ⭐ النقاط:
+            <b id="meteorScore">0</b> / 30
+        </span>
+        <span>
+            ⏱️ الوقت:
+            <b id="meteorTime">20</b>
+        </span>
+    </div>
+    <div
+        id="meteorGameArea"
+        class="game-area"
+    ></div>
+    <div
+        id="meteorGameResult"
+        class="game-result hidden"
+    >
+        <h2>
+            🏆 انتهت المرحلة
+        </h2>
+        <p>
+            نقاط المرحلة:
+            <strong id="finalMeteorScore">
+                0
+            </strong>
+            / 30
+        </p>
+        <button id="continueStage2">
+            🚀 المرحلة الثانية
+        </button>
+        <button id="backGameMenu">
+            🎮 المراحل
+        </button>
+    </div>
+</section>
+<!-- المرحلة 2 -->
+<section id="raceGamePage" class="page hidden">
+    <h1>🚀 سباق الفضاء</h1>
+    <p class="instruction">
+        حرّك المركبة وتجنب الكويكبات!
+    </p>
+    <div id="raceCountdown" class="countdown hidden">
+        3
+    </div>
+    <div class="game-info">
+        <span>
+            ⭐ النقاط:
+            <b id="raceScore">0</b> / 35
+        </span>
+        <span>
+            ⏱️ الوقت:
+            <b id="raceTime">20</b>
+        </span>
+    </div>
+    <div
+        id="raceGameArea"
+        class="game-area race-area"
+    >
+        <div id="playerShip">
+            🚀
+        </div>
+    </div>
+    <div
+        id="raceGameResult"
+        class="game-result hidden"
+    >
+        <h2>
+            🏆 انتهت المرحلة
+        </h2>
+        <p>
+            نقاط المرحلة:
+            <strong id="finalRaceScore">
+                0
+            </strong>
+            / 35
+        </p>
+        <button id="continueStage3">
+            🛰️ المرحلة الثالثة
+        </button>
+        <button id="backGameMenu2">
+            🎮 المراحل
+        </button>
+    </div>
+</section>
+<!-- المرحلة 3 الجديدة -->
+<section id="rescueGamePage" class="page hidden">
+    <h1>🛰️ إنقاذ محطة الفضاء</h1>
+    <p class="instruction">
+        اجمع خلايا الطاقة 🔋 وتجنب الكويكبات ☄️!
+    </p>
+    <div id="rescueCountdown" class="countdown hidden">
+        3
+    </div>
+    <div class="game-info">
+        <span>
+            ⭐ النقاط:
+            <b id="rescueScore">0</b> / 35
+        </span>
+        <span>
+            ⏱️ الوقت:
+            <b id="rescueTime">30</b>
+        </span>
+    </div>
+    <div
+        id="rescueGameArea"
+        class="game-area rescue-area"
+    >
+        <div id="spaceStation">
+            🛰️
+        </div>
+        <div id="rescueShip">
+            🚀
+        </div>
+    </div>
+    <div class="controls">
+        <button id="rescueLeftButton">
+            ⬅️
+        </button>
+        <button id="rescueRightButton">
+            ➡️
+        </button>
+    </div>
+    <div
+        id="rescueGameResult"
+        class="game-result hidden"
+    >
+        <h2>
+            🏆 تم إنقاذ المحطة!
+        </h2>
+        <p>
+            نقاط المرحلة:
+            <strong id="finalRescueScore">
+                0
+            </strong>
+            / 35
+        </p>
+        <button id="finalGameButton">
+            🏆 النتيجة النهائية
+        </button>
+        <button id="backGameMenu3">
+            🎮 المراحل
+        </button>
+    </div>
+</section>
+<!-- النتيجة النهائية -->
+<section id="finalGamePage" class="page hidden">
+    <div class="final-game-box">
+        <div class="result-icon">
+            🚀
+        </div>
+        <h1>
+            نتيجتك النهائية
+        </h1>
+        <div class="final-score">
+            <span id="finalGameScore">
+                0
+            </span>
+            <small>
+                / 100
+            </small>
+        </div>
+        <h2 id="finalGameTitle"></h2>
+        <p id="finalGameText"></p>
+        <div class="score-breakdown">
+            <p>
+                ☄️ صائد الشهب:
+                <span id="breakdown1">0</span> / 30
+            </p>
+            <p>
+                🚀 سباق الفضاء:
+                <span id="breakdown2">0</span> / 35
+            </p>
+            <p>
+                🛰️ إنقاذ محطة الفضاء:
+                <span id="breakdown3">0</span> / 35
+            </p>
+        </div>
+        <button id="playAgainGame">
+            🔄 العب من جديد
+        </button>
+        <button id="finalBackHome">
+            🏠 الرئيسية
+        </button>
+    </div>
+</section>
+<script src="script.js"></script>
+</body>
+</html>
